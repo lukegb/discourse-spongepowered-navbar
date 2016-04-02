@@ -7,6 +7,18 @@ export default {
       click: function(e) {
         var $target = $(e.target);
         if (!$target.closest(".sp-forums-home").length && !!$target.closest(".sp-skip-handler").length) return true;
+        if (!!$target.closest(".sp-menu-toggle").length) {
+          // check to see if we currently have the menu open
+          if ($(".sp-logo-container").is(":focus")) {
+            // blur it
+            $(".sp-logo-container").blur();
+          } else {
+            $(".sp-logo-container").focus();
+          }
+          
+          e.preventDefault();
+          return true;
+        }
     
         return this._super(e);
       },
@@ -45,7 +57,7 @@ export default {
         if (!this.site.mobileView) {
           buffer.push('<div class="sp-logo-chevron">');
         } else {
-          buffer.push('<a class="sp-logo-chevron">');
+          buffer.push('<a class="sp-logo-chevron sp-menu-toggle">');
         }
         buffer.push('<i class="sp-icon-down-open-big" style="vertical-align:middle"></i>');
         if (!this.site.mobileView) {

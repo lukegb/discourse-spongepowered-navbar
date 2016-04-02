@@ -84,3 +84,29 @@ $sp-logo-width-mini: 94px;
     color: gray;
     display: inline-block;
 }
+
+html.mobile-view .sp-logo-container {
+    display: table-row;
+    
+    $sp-logo-height: 59px;
+    
+    .sp-logo-chevron {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    
+    ul.sp-logo-dropdown > a {
+        display: block;
+    }
+    
+    .sp-logo-bg {
+        height: $sp-logo-height;
+    }
+    .sp-logo-menu {
+        padding-top: $sp-logo-height;
+    }
+    
+    .sp-logo-dropdown i {
+        padding: 0 5px 0 10px;
+    }
+}

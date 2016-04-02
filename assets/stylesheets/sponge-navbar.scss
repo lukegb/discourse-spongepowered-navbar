@@ -7,14 +7,13 @@ $sp-chevron-color: gray;
 
 .sp-logo-container {
     margin-right: -$sp-logo-offset-y;
-
-    &:hover {
-        .sp-logo-bg {
-            display: block;
-        }
-        .sp-logo-menu {
-            display: block;
-        }
+}
+.sp-logo-container.sp-not-mobileview:hover, .sp-logo-container.sp-mobileview:focus {
+    .sp-logo-bg {
+        display: block;
+    }
+    .sp-logo-menu {
+        display: block;
     }
 }
 .sp-logo-container.sp-logo-small, .sp-logo-container.sp-logo-mobile {

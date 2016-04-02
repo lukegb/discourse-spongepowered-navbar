@@ -3,6 +3,7 @@ $sp-logo-offset-x: -11px;
 $sp-logo-height: 63px;
 $sp-logo-width: 174px;
 $sp-logo-width-mini: 94px;
+$sp-chevron-color: gray;
 
 .sp-logo-container {
     margin-right: -$sp-logo-offset-y;
@@ -81,11 +82,11 @@ $sp-logo-width-mini: 94px;
     }
 }
 .sp-logo-chevron {
-    color: gray;
+    color: $sp-chevron-color;
     display: inline-block;
 }
 
-html.mobile-view .sp-logo-container {
+.sp-logo-container.sp-mobileview {
     display: table-row;
     
     $sp-logo-height: 59px;
@@ -93,6 +94,11 @@ html.mobile-view .sp-logo-container {
     .sp-logo-chevron {
         display: table-cell;
         vertical-align: middle;
+        position: relative;
+        z-index: 10;
+        left: -20px;
+        padding-left: 20px;
+        color: $sp-chevron-color;
     }
     
     ul.sp-logo-dropdown > a {

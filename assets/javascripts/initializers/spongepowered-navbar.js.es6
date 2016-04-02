@@ -15,6 +15,7 @@ export default {
         const classes = [];
         classes.push(this.get('minimized') ? 'sp-logo-small' : 'sp-logo-not-small');
         classes.push(this.showMobileLogo ? 'sp-logo-mobile': 'sp-logo-not-mobile');
+        classes.push(this.site.mobileView ? 'sp-mobileview' : 'sp-not-mobileview');
         return classes.join(' ');
       },
     
@@ -41,9 +42,18 @@ export default {
         }
         buffer.push('</a>');
         buffer.push('<div class="sp-logo-bg"></div>');
-        buffer.push('<div class="sp-logo-chevron">');
+        if (!this.site.mobileView) {
+          buffer.push('<div class="sp-logo-chevron">');
+        } else {
+          buffer.push('<a class="sp-logo-chevron">');
+        }
         buffer.push('<i class="sp-icon-down-open-big" style="vertical-align:middle"></i>');
-        buffer.push('</div>');
+        if (!this.site.mobileView) {
+          buffer.push('</div>');
+        } else {
+          buffer.push('</a>');
+        }
+        }
         buffer.push('<div class="sp-logo-menu sp-skip-handler">');
         buffer.push('<ul class="sp-logo-dropdown" id="ddleft">');
         buffer.push('<a href="https://www.spongepowered.org"><li><i class="sp-icon-home"></i> Homepage</li></a>');

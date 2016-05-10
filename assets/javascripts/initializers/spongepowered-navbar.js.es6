@@ -65,7 +65,6 @@ export default {
         } else {
           buffer.push('</a>');
         }
-        }
         buffer.push('<div class="sp-logo-menu sp-skip-handler">');
         buffer.push('<ul class="sp-logo-dropdown" id="ddleft">');
         buffer.push('<a href="https://www.spongepowered.org"><li><i class="sp-icon-home"></i> Homepage</li></a>');

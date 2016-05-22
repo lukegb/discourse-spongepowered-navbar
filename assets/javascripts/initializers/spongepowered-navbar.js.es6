@@ -86,7 +86,7 @@ export default {
 
         return h('a', { key: `sp-link-${id}`, attributes: attributes.a },
           h('li', { key: `sp-li-${id}`, attributes: attributes.li }, [
-            h(`i.${icon}`),
+            h(`i.fa.fa-fw.${icon}`),
             ' ',
             text,
           ])
@@ -98,17 +98,17 @@ export default {
           h('a.sp-logo-link', { attributes: { href: this.href(), 'data-auto-route': true } }, this.logo()),
           h('.div.sp-logo-bg', { key: 'sp-logo-bg' }),
           h(this.site.mobileView ? 'a.sp-logo-chevron.sp-menu-toggle' : 'div.sp-logo-chevron', { key: 'sp-logo-chevron' },
-            h('i.sp-icon-down-open-big', { attributes: { style: 'vertical-align: middle' } })
+            h('i.fa.fa-chevron-down', { attributes: { style: 'vertical-align: middle' } })
           ),
           h('div.sp-logo-menu.sp-skip-handler', [
             h('ul.sp-logo-dropdown#ddleft', { key: 'sp-logo-dropdown' }, [
-              this.ulTo('https://www.spongepowered.org', 'home', 'sp-icon-home', 'Homepage'),
-              this.ulTo('https://forums.spongepowered.org', 'forums', 'sp-icon-pencil', 'Forums'),
-              this.ulTo('https://github.com/SpongePowered', 'github', 'sp-icon-code', 'Code'),
-              this.ulTo('https://docs.spongepowered.org', 'docs', 'sp-icon-book-open', 'SpongeDocs'),
-              this.ulTo('https://jd.spongepowered.org', 'jd', 'sp-icon-graduation-cap', 'JavaDocs'),
-              this.ulTo('https://forums.spongepowered.org/c/plugins/plugin-releases', 'plugins', 'sp-icon-tools', 'Plugins'),
-              this.ulTo('https://forums.spongepowered.org/t/sponge-downloads/11448', 'dl', 'sp-icon-download', 'Get Sponge'),
+              this.ulTo('https://www.spongepowered.org', 'home', 'fa-home', 'Homepage'),
+              this.ulTo('https://forums.spongepowered.org', 'forums', 'fa-comment', 'Forums'),
+              this.ulTo('https://github.com/SpongePowered', 'github', 'fa-code', 'Code'),
+              this.ulTo('https://docs.spongepowered.org', 'docs', 'fa-book', 'SpongeDocs'),
+              this.ulTo('https://jd.spongepowered.org', 'jd', 'fa-graduation-cap', 'JavaDocs'),
+              this.ulTo('https://forums.spongepowered.org/c/plugins/plugin-releases', 'plugins', 'fa-plug', 'Plugins'),
+              this.ulTo('https://forums.spongepowered.org/t/sponge-downloads/11448', 'dl', 'fa-download', 'Get Sponge'),
             ]),
           ]),
         ]);

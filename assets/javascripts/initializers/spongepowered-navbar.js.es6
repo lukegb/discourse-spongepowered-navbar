@@ -1,10 +1,25 @@
-import { iconHTML } from 'discourse/helpers/fa-icon';
+import { createWidget } from 'discourse/widgets/widget';
+import { h } from 'virtual-dom';
+import { iconNode } from 'discourse/helpers/fa-icon';
+import { wantsNewWindow } from 'discourse/lib/intercept-click';
+import DiscourseURL from 'discourse/lib/url';
 
 export default {
   name: 'spongepowered-navbar',
   initialize() {
-    require('discourse/components/home-logo').default.reopen({
-      click: function(e) {
+    require('discourse/widgets/home-logo').default = createWidget('home-logo', {
+      tagName: 'div.title',
+
+      settings: {
+        href: '/',
+      },
+
+      href() {
+        const href = this.settings.href;
+        return (typeof href === "function") ? href() : href;
+      },
+
+      click(e) {
         var $target = $(e.target);
         if (!$target.closest(".sp-forums-home").length && !!$target.closest(".sp-skip-handler").length) return true;
         if (!!$target.closest(".sp-menu-toggle").length) {
@@ -20,64 +35,84 @@ export default {
           return true;
         }
     
-        return this._super(e);
+        if (wantsNewWindow(e)) { return false; }
+        e.preventDefault();
+    
+        DiscourseURL.routeToTag($target.closest('a')[0]);
+        return false;
       },
     
       spContainerClass() {
         const classes = [];
-        classes.push(this.get('minimized') ? 'sp-logo-small' : 'sp-logo-not-small');
+        classes.push(this.attrs.minimized ? 'sp-logo-small' : 'sp-logo-not-small');
         classes.push(this.showMobileLogo ? 'sp-logo-mobile': 'sp-logo-not-mobile');
         classes.push(this.site.mobileView ? 'sp-mobileview' : 'sp-not-mobileview');
         return classes.join(' ');
       },
-    
-      render(buffer) {
+
+      logo() {
         const { siteSettings } = this;
+        const mobileView = this.site.mobileView;
+    
+        const mobileLogoUrl = siteSettings.mobile_logo_url || "";
+        const showMobileLogo = mobileView && (mobileLogoUrl.length > 0);
+    
         const logoUrl = siteSettings.logo_url || '';
         const title = siteSettings.title;
     
-        buffer.push(`<div class="sp-logo-container ${this.spContainerClass()}">`);
-        buffer.push(`<a href="${this.linkUrl}" data-auto-route="true" class="sp-logo-link">`);
-        if (!this.site.mobileView && this.get('minimized')) {
+        if (!mobileView && this.attrs.minimized) {
           const logoSmallUrl = siteSettings.logo_small_url || '';
           if (logoSmallUrl.length) {
-            buffer.push(`<img id='site-logo' class="logo-small" src="${logoSmallUrl}" width="33" height="33" alt="${title}">`);
+            return h('img#site-logo.logo-small', { key: 'logo-small', attributes: { src: logoSmallUrl, width: 33, height: 33, alt: title } });
           } else {
-            buffer.push(iconHTML('home'));
+            return iconNode('home');
           }
-        } else if (this.showMobileLogo) {
-          buffer.push(`<img id="site-logo" class="logo-big" src="${siteSettings.mobile_logo_url}" alt="${title}">`);
+        } else if (showMobileLogo) {
+          return h('img#site-logo.logo-big', { key: 'logo-mobile', attributes: { src: mobileLogoUrl, alt: title } });
         } else if (logoUrl.length) {
-          buffer.push(`<img id="site-logo" class="logo-big" src="${logoUrl}" alt="${title}">`);
+          return h('img#site-logo.logo-big', { key: 'logo-big', attributes: { src: logoUrl, alt: title } });
         } else {
-          buffer.push(`<h2 id="site-text-logo" class="text-logo">${title}</h2>`);
+          return h('h2#site-text-logo.text-logo', { key: 'logo-text' }, title);
         }
-        buffer.push('</a>');
-        buffer.push('<div class="sp-logo-bg"></div>');
-        if (!this.site.mobileView) {
-          buffer.push('<div class="sp-logo-chevron">');
-        } else {
-          buffer.push('<a class="sp-logo-chevron sp-menu-toggle">');
+      },
+
+      ulTo(linkTo, id, icon, text) {
+        const attributes = { a: { href: linkTo }, li: {} };
+
+        if (id == 'forums') {
+            attributes.a.class = 'sp-forums-home';
+            attributes.li.class = 'active';
         }
-        buffer.push('<i class="sp-icon-down-open-big" style="vertical-align:middle"></i>');
-        if (!this.site.mobileView) {
-          buffer.push('</div>');
-        } else {
-          buffer.push('</a>');
-        }
-        buffer.push('<div class="sp-logo-menu sp-skip-handler">');
-        buffer.push('<ul class="sp-logo-dropdown" id="ddleft">');
-        buffer.push('<a href="https://www.spongepowered.org"><li><i class="sp-icon-home"></i> Homepage</li></a>');
-        buffer.push('<a href="https://forums.spongepowered.org" class="sp-forums-home"><li class="active"><i class="sp-icon-pencil"></i> Forums</li></a>');
-        buffer.push('<a href="https://github.com/SpongePowered"><li><i class="sp-icon-code"></i> Code</li></a>');
-        buffer.push('<a href="https://docs.spongepowered.org"><li><i class="sp-icon-book-open"></i> SpongeDocs</li></a>');
-        buffer.push('<a href="https://jd.spongepowered.org"><li><i class="sp-icon-graduation-cap"></i> JavaDocs</li></a>');
-        buffer.push('<a href="https://forums.spongepowered.org/c/plugins/plugin-releases"><li><i class="sp-icon-tools"></i> Plugins</li></a>');
-        buffer.push('<a href="https://forums.spongepowered.org/t/sponge-downloads/11448"><li><i class="sp-icon-download"></i> Get Sponge</li></a>');
-        buffer.push('</ul>');
-        buffer.push('</div>');
-        buffer.push('</div>');
-      }
+
+        return h('a', { key: `sp-link-${id}`, attributes: attributes.a },
+          h('li', { key: `sp-li-${id}`, attributes: attributes.li }, [
+            h(`i.${icon}`),
+            ' ',
+            text,
+          ])
+        );
+      },
+
+      html() {
+        return h(`a.sp-logo-container.${this.spContainerClass()}`, { key: 'sp-logo-container' }, [
+          h('a.sp-logo-link', { attributes: { href: this.href(), 'data-auto-route': true } }, this.logo()),
+          h('.div.sp-logo-bg', { key: 'sp-logo-bg' }),
+          h(this.site.mobileView ? 'a.sp-logo-chevron.sp-menu-toggle' : 'div.sp-logo-chevron', { key: 'sp-logo-chevron' },
+            h('i.sp-icon-down-open-big', { attributes: { style: 'vertical-align: middle' } })
+          ),
+          h('div.sp-logo-menu.sp-skip-handler', [
+            h('ul.sp-logo-dropdown#ddleft', { key: 'sp-logo-dropdown' }, [
+              this.ulTo('https://www.spongepowered.org', 'home', 'sp-icon-home', 'Homepage'),
+              this.ulTo('https://forums.spongepowered.org', 'forums', 'sp-icon-pencil', 'Forums'),
+              this.ulTo('https://github.com/SpongePowered', 'github', 'sp-icon-code', 'Code'),
+              this.ulTo('https://docs.spongepowered.org', 'docs', 'sp-icon-book-open', 'SpongeDocs'),
+              this.ulTo('https://jd.spongepowered.org', 'jd', 'sp-icon-graduation-cap', 'JavaDocs'),
+              this.ulTo('https://forums.spongepowered.org/c/plugins/plugin-releases', 'plugins', 'sp-icon-tools', 'Plugins'),
+              this.ulTo('https://forums.spongepowered.org/t/sponge-downloads/11448', 'dl', 'sp-icon-download', 'Get Sponge'),
+            ]),
+          ]),
+        ]);
+      },
     
     });
   }

@@ -44,7 +44,7 @@ $sp-chevron-color: gray;
     width: $sp-logo-width;
     z-index: 5;
 }
-.sp-logo-dropdown {
+.sp-logo-container > .sp-logo-menu > .sp-logo-dropdown {
     background-color: #fff;
     -webkit-border-radius: 0 0 4px 4px;
     border-radius: 0 0 4px 4px;

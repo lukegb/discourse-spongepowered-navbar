@@ -72,7 +72,7 @@ export default {
         } else if (logoUrl.length) {
           return [
             h('img#site-logo.logo-big', { key: 'logo-big', attributes: { src: logoUrl, alt: title, height: 40, width: 40 } }),
-            h('h2#site-text-logo.text-logo', { key: 'logo-text' }, title);
+            h('h2#site-text-logo.text-logo', { key: 'logo-text' }, title),
           ];
         } else {
           return h('h2#site-text-logo.text-logo', { key: 'logo-text' }, title);

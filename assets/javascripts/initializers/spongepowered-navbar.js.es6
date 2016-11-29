@@ -106,12 +106,13 @@ export default {
           h('div.sp-logo-menu.sp-skip-handler', [
             h('ul.sp-logo-dropdown#ddleft', { key: 'sp-logo-dropdown' }, [
               this.ulTo('https://www.spongepowered.org', 'home', 'fa-home', 'Homepage'),
-              this.ulTo('https://forums.spongepowered.org', 'forums', 'fa-comment', 'Forums'),
+              this.ulTo('https://forums.spongepowered.org', 'forums', 'fa-comments', 'Forums'),
               this.ulTo('https://github.com/SpongePowered', 'github', 'fa-code', 'Code'),
-              this.ulTo('https://docs.spongepowered.org', 'docs', 'fa-book', 'SpongeDocs'),
-              this.ulTo('https://jd.spongepowered.org', 'jd', 'fa-graduation-cap', 'JavaDocs'),
+              this.ulTo('https://docs.spongepowered.org', 'docs', 'fa-book', 'Docs'),
+              this.ulTo('https://jd.spongepowered.org', 'jd', 'fa-graduation-cap', 'Javadocs'),
               this.ulTo('https://forums.spongepowered.org/c/plugins/plugin-releases', 'plugins', 'fa-plug', 'Plugins'),
-              this.ulTo('https://forums.spongepowered.org/t/sponge-downloads/11448', 'dl', 'fa-download', 'Get Sponge'),
+              this.ulTo('https://www.spongepowered.org/downloads', 'dl', 'fa-download', 'Downloads'),
+              this.ulTo('https://www.spongepowered.org/chat', 'chat', 'fa-comment', 'Chat'),
             ]),
           ]),
         ]);

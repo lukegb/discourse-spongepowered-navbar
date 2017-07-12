@@ -4,10 +4,12 @@ import { iconNode } from 'discourse/helpers/fa-icon-node';
 import { wantsNewWindow } from 'discourse/lib/intercept-click';
 import DiscourseURL from 'discourse/lib/url';
 
+import * as HomeLogo from 'discourse/widgets/home-logo';
+
 export default {
   name: 'spongepowered-navbar',
   initialize() {
-    require('discourse/widgets/home-logo').default = createWidget('home-logo', {
+    HomeLogo.default = createWidget('home-logo', {
       tagName: 'div.title',
 
       settings: {

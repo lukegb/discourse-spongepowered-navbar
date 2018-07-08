@@ -32,18 +32,18 @@ export default {
           } else {
             $(".sp-logo-container").focus();
           }
-          
+
           e.preventDefault();
           return true;
         }
-    
+
         if (wantsNewWindow(e)) { return false; }
         e.preventDefault();
-    
+
         DiscourseURL.routeToTag($target.closest('a')[0]);
         return false;
       },
-    
+
       spContainerClass() {
         const classes = [];
         classes.push(this.attrs.minimized ? 'sp-logo-small' : 'sp-logo-not-small');
@@ -55,13 +55,13 @@ export default {
       logo() {
         const { siteSettings } = this;
         const mobileView = this.site.mobileView;
-    
+
         const mobileLogoUrl = siteSettings.mobile_logo_url || "";
         const showMobileLogo = mobileView && (mobileLogoUrl.length > 0);
-    
+
         const logoUrl = siteSettings.logo_url || '';
         const title = siteSettings.title;
-    
+
         if (!mobileView && this.attrs.minimized) {
           const logoSmallUrl = siteSettings.logo_small_url || '';
           if (logoSmallUrl.length) {
@@ -98,6 +98,12 @@ export default {
         );
       },
 
+      bold(id, text) {
+        return h('b', { key: `sp-bold-${id}`, attributes: {} },
+          text
+        );
+      },
+
       html() {
         return h(`a.sp-logo-container.${this.spContainerClass()}`, { key: 'sp-logo-container' }, [
           h('a.sp-logo-link', { attributes: { href: this.href(), 'data-auto-route': true } }, this.logo()),
@@ -113,13 +119,14 @@ export default {
               this.ulTo('https://docs.spongepowered.org', 'docs', 'fa-book', 'Docs'),
               this.ulTo('https://jd.spongepowered.org', 'jd', 'fa-graduation-cap', 'Javadocs'),
               this.ulTo('https://forums.spongepowered.org/c/plugins/plugin-releases', 'plugins', 'fa-plug', 'Plugins'),
+              this.ulTo('https://ore.spongepowered.org', 'ore', 'fa-cubes', 'Ore ' + this.bold('ore-beta', 'Beta')),
               this.ulTo('https://www.spongepowered.org/downloads', 'dl', 'fa-download', 'Downloads'),
               this.ulTo('https://www.spongepowered.org/chat', 'chat', 'fa-comment', 'Chat'),
             ]),
           ]),
         ]);
       },
-    
+
     });
   }
 };

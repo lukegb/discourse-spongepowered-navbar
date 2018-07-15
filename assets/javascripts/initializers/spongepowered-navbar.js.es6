@@ -82,7 +82,7 @@ export default {
       },
 
       ulTo(linkTo, id, icon, text, image) {
-        const attributes = { a: { href: linkTo }, li: {}, img_icon: { src: icon, alt: '', class: 'fa' } };
+        const attributes = { a: { href: linkTo }, li: {}, img_icon: { src: icon, alt: '', class: 'fa-fw fa ore-logo' } };
 
         if (id == 'forums') {
             attributes.a.class = 'sp-forums-home';

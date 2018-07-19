@@ -49,7 +49,7 @@ export default {
         classes.push(this.attrs.minimized ? 'sp-logo-small' : 'sp-logo-not-small');
         classes.push(this.showMobileLogo ? 'sp-logo-mobile': 'sp-logo-not-mobile');
         classes.push(this.site.mobileView ? 'sp-mobileview' : 'sp-not-mobileview');
-        return classes.join(' ');
+        return classes.join('.');
       },
 
       logo() {

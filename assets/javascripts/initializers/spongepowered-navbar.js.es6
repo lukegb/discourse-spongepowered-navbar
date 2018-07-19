@@ -32,18 +32,18 @@ export default {
           } else {
             $(".sp-logo-container").focus();
           }
-          
+
           e.preventDefault();
           return true;
         }
-    
+
         if (wantsNewWindow(e)) { return false; }
         e.preventDefault();
-    
+
         DiscourseURL.routeToTag($target.closest('a')[0]);
         return false;
       },
-    
+
       spContainerClass() {
         const classes = [];
         classes.push(this.attrs.minimized ? 'sp-logo-small' : 'sp-logo-not-small');
@@ -55,13 +55,13 @@ export default {
       logo() {
         const { siteSettings } = this;
         const mobileView = this.site.mobileView;
-    
+
         const mobileLogoUrl = siteSettings.mobile_logo_url || "";
         const showMobileLogo = mobileView && (mobileLogoUrl.length > 0);
-    
+
         const logoUrl = siteSettings.logo_url || '';
         const title = siteSettings.title;
-    
+
         if (!mobileView && this.attrs.minimized) {
           const logoSmallUrl = siteSettings.logo_small_url || '';
           if (logoSmallUrl.length) {
@@ -81,8 +81,8 @@ export default {
         }
       },
 
-      ulTo(linkTo, id, icon, text) {
-        const attributes = { a: { href: linkTo }, li: {} };
+      ulTo(linkTo, id, icon, text, image) {
+        const attributes = { a: { href: linkTo }, li: {}, img_icon: { src: icon, alt: '', class: 'fa-fw fa ore-logo' } };
 
         if (id == 'forums') {
             attributes.a.class = 'sp-forums-home';
@@ -91,10 +91,16 @@ export default {
 
         return h('a', { key: `sp-link-${id}`, attributes: attributes.a },
           h('li', { key: `sp-li-${id}`, attributes: attributes.li }, [
-            h(`i.fa.fa-fw.${icon}`),
+            image ? h('img', { key: `sp-img-${id}`, attributes: attributes.img_icon }) : h(`i.fa.fa-fw.${icon}`),
             ' ',
             text,
           ])
+        );
+      },
+
+      sup(id, text) {
+        return h('sup', { key: `sp-bold-${id}`, attributes: {} },
+          text
         );
       },
 
@@ -107,19 +113,20 @@ export default {
           ),
           h('div.sp-logo-menu.sp-skip-handler', [
             h('ul.sp-logo-dropdown#ddleft', { key: 'sp-logo-dropdown' }, [
-              this.ulTo('https://www.spongepowered.org', 'home', 'fa-home', 'Homepage'),
-              this.ulTo('https://forums.spongepowered.org', 'forums', 'fa-comments', 'Forums'),
-              this.ulTo('https://github.com/SpongePowered', 'github', 'fa-code', 'Code'),
-              this.ulTo('https://docs.spongepowered.org', 'docs', 'fa-book', 'Docs'),
-              this.ulTo('https://jd.spongepowered.org', 'jd', 'fa-graduation-cap', 'Javadocs'),
-              this.ulTo('https://forums.spongepowered.org/c/plugins/plugin-releases', 'plugins', 'fa-plug', 'Plugins'),
-              this.ulTo('https://www.spongepowered.org/downloads', 'dl', 'fa-download', 'Downloads'),
-              this.ulTo('https://www.spongepowered.org/chat', 'chat', 'fa-comment', 'Chat'),
+              this.ulTo('https://www.spongepowered.org', 'home', 'fa-home', 'Homepage', false),
+              this.ulTo('https://forums.spongepowered.org', 'forums', 'fa-comments', 'Forums', false),
+              this.ulTo('https://github.com/SpongePowered', 'github', 'fa-code', 'Code', false),
+              this.ulTo('https://docs.spongepowered.org', 'docs', 'fa-book', 'Docs', false),
+              this.ulTo('https://jd.spongepowered.org', 'jd', 'fa-graduation-cap', 'Javadocs', false),
+              this.ulTo('https://forums.spongepowered.org/c/plugins/plugin-releases', 'plugins', 'fa-plug', 'Plugins', false),
+              this.ulTo('https://ore.spongepowered.org', 'ore', 'https://www.spongepowered.org/assets/img/icons/ore.svg', 'Ore ' + this.sup('ore-beta', 'Beta'), true),
+              this.ulTo('https://www.spongepowered.org/downloads', 'dl', 'fa-download', 'Downloads', false),
+              this.ulTo('https://www.spongepowered.org/chat', 'chat', 'fa-comment', 'Chat', false),
             ]),
           ]),
         ]);
       },
-    
+
     });
   }
 };

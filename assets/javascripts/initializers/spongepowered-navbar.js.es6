@@ -81,8 +81,8 @@ export default {
         }
       },
 
-      ulTo(linkTo, id, icon, text, image) {
-        const attributes = { a: { href: linkTo }, li: {}, img_icon: { src: icon, alt: '', class: 'fa-fw fa ore-logo' } };
+      ulTo(linkTo, id, icon, text) {
+        const attributes = { a: { href: linkTo }, li: {} };
 
         if (id == 'forums') {
             attributes.a.class = 'sp-forums-home';
@@ -91,9 +91,7 @@ export default {
 
         return h('a', { key: `sp-link-${id}`, attributes: attributes.a },
           h('li', { key: `sp-li-${id}`, attributes: attributes.li }, [
-            image ? h('img', { key: `sp-img-${id}`, attributes: attributes.img_icon }) : h(`i.fa.fa-fw.${icon}`),
-            ' ',
-            text,
+            icon, ' ', text,
           ])
         );
       },
@@ -102,6 +100,20 @@ export default {
         return h('sup', { key: `sp-bold-${id}`, attributes: {} },
           text
         );
+      },
+
+      icon(icon) {
+        return h(`i.fa.fa-fw.${icon}`);
+      },
+
+      oreIcon() {
+        return h('img.fa.fa-fw.ore-logo', {
+          key: 'sp-img-ore',
+          attributes: {
+            src: 'https://www.spongepowered.org/assets/img/icons/ore.svg',
+            alt: '',
+          },
+        });
       },
 
       html() {
@@ -113,15 +125,15 @@ export default {
           ),
           h('div.sp-logo-menu.sp-skip-handler', [
             h('ul.sp-logo-dropdown#ddleft', { key: 'sp-logo-dropdown' }, [
-              this.ulTo('https://www.spongepowered.org', 'home', 'fa-home', 'Homepage', false),
-              this.ulTo('https://forums.spongepowered.org', 'forums', 'fa-comments', 'Forums', false),
-              this.ulTo('https://github.com/SpongePowered', 'github', 'fa-code', 'Code', false),
-              this.ulTo('https://docs.spongepowered.org', 'docs', 'fa-book', 'Docs', false),
-              this.ulTo('https://jd.spongepowered.org', 'jd', 'fa-graduation-cap', 'Javadocs', false),
-              this.ulTo('https://forums.spongepowered.org/c/plugins/plugin-releases', 'plugins', 'fa-plug', 'Plugins', false),
-              this.ulTo('https://ore.spongepowered.org', 'ore', 'https://www.spongepowered.org/assets/img/icons/ore.svg', 'Ore ' + this.sup('ore-beta', 'Beta'), true),
-              this.ulTo('https://www.spongepowered.org/downloads', 'dl', 'fa-download', 'Downloads', false),
-              this.ulTo('https://www.spongepowered.org/chat', 'chat', 'fa-comment', 'Chat', false),
+              this.ulTo('https://www.spongepowered.org', 'home', this.icon('fa-home'), 'Homepage', false),
+              this.ulTo('https://forums.spongepowered.org', 'forums', this.icon('fa-comments'), 'Forums', false),
+              this.ulTo('https://github.com/SpongePowered', 'github', this.icon('fa-code'), 'Code', false),
+              this.ulTo('https://docs.spongepowered.org', 'docs', this.icon('fa-book'), 'Docs', false),
+              this.ulTo('https://jd.spongepowered.org', 'jd', this.icon('fa-graduation-cap'), 'Javadocs', false),
+              this.ulTo('https://forums.spongepowered.org/c/plugins/plugin-releases', 'plugins', this.icon('fa-plug'), 'Plugins', false),
+              this.ulTo('https://ore.spongepowered.org', 'ore', this.oreIcon(), ['Ore ', this.sup('ore-beta', 'Beta')], true),
+              this.ulTo('https://www.spongepowered.org/downloads', 'dl', this.icon('fa-download'), 'Downloads', false),
+              this.ulTo('https://www.spongepowered.org/chat', 'chat', this.icon('fa-comment'), 'Chat', false),
             ]),
           ]),
         ]);

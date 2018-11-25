@@ -56,14 +56,14 @@ export default {
         const { siteSettings } = this;
         const mobileView = this.site.mobileView;
 
-        const mobileLogoUrl = siteSettings.mobile_logo_url || "";
+        const mobileLogoUrl = siteSettings.site_mobile_logo_url || "";
         const showMobileLogo = mobileView && (mobileLogoUrl.length > 0);
 
-        const logoUrl = siteSettings.logo_url || '';
+        const logoUrl = siteSettings.site_logo_url || '';
         const title = siteSettings.title;
 
         if (!mobileView && this.attrs.minimized) {
-          const logoSmallUrl = siteSettings.logo_small_url || '';
+          const logoSmallUrl = siteSettings.site_logo_small_url || '';
           if (logoSmallUrl.length) {
             return h('img#site-logo.logo-small', { key: 'logo-small', attributes: { src: logoSmallUrl, alt: title } });
           } else {
@@ -74,10 +74,10 @@ export default {
         } else if (logoUrl.length) {
           return [
             h('img#site-logo.logo-big', { key: 'logo-big', attributes: { src: logoUrl, alt: title, height: 40, width: 40 } }),
-            h('h2#site-text-logo.text-logo', { key: 'logo-text' }, 'Sponge'),
+            h('h1#site-text-logo.text-logo', { key: 'logo-text' }, 'Sponge'),
           ];
         } else {
-          return h('h2#site-text-logo.text-logo', { key: 'logo-text' }, 'Sponge');
+          return h('h1#site-text-logo.text-logo', { key: 'logo-text' }, 'Sponge');
         }
       },
 

@@ -1,7 +1,7 @@
 $sp-logo-offset-y: -20px;
-$sp-logo-offset-x: -11px;
+$sp-logo-offset-x: -4px;
 $sp-logo-height: 63px;
-$sp-logo-width: 174px;
+$sp-logo-width: 200px;
 $sp-logo-width-mini: 94px;
 $sp-chevron-color: gray;
 
@@ -43,6 +43,11 @@ $sp-chevron-color: gray;
     left: $sp-logo-offset-y;
     width: $sp-logo-width;
     z-index: 5;
+    .d-icon {
+        width: 15px;
+        height: 15px;
+        padding: 0 12px 0 7px;
+    }
 }
 .sp-logo-container > .sp-logo-menu > .sp-logo-dropdown {
     background-color: #fff;
@@ -51,7 +56,7 @@ $sp-chevron-color: gray;
     border: 1px solid #e4e4e4;
 
     margin: 0;
-    padding: 10px 0 4px;
+    padding: 4px 0 4px;
 
     $active-color: #f6cf17;
     $inactive-color: #fff;
@@ -127,3 +132,18 @@ $sp-chevron-color: gray;
         padding: 0 5px 0 10px;
     }
 }
+
+.d-header {
+    .title a, .title a:visited {
+        color: #f6cf17;
+    }
+    #site-text-logo {
+        font-family: Montserrat,Helvetica,Arial,sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 7px;
+    }
+}
+
